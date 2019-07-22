@@ -16,16 +16,16 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("file:///${user.home}/.devopsbuddy/application-prod.properties")
 public class ProductionConfig {
 
-    @Value("${stripe.prod.private.key}")
-    private String stripeProdKey;
+//    @Value("${stripe.prod.private.key}")
+//    private String stripeProdKey;
 
     @Bean
     public EmailService emailService() {
         return new SmtpEmailService();
     }
 
-    @Bean
-    public String stripeKey() {
-        return stripeProdKey;
-    }
+//    @Bean
+//    public String stripeKey() {
+//        return stripeProdKey;
+//    }
 }
