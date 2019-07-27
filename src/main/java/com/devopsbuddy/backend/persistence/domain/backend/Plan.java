@@ -1,12 +1,18 @@
 package com.devopsbuddy.backend.persistence.domain.backend;
 
+import com.devopsbuddy.enums.PlansEnum;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.Objects;
 
+/**
+ * Created by tedonema on 28/03/2016.
+ */
 @Entity
 public class Plan implements Serializable {
+
+    /** The Serial Version UID for Serializable classes. */
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -14,7 +20,14 @@ public class Plan implements Serializable {
 
     private String name;
 
+    /** Default constructor. */
     public Plan() {
+
+    }
+
+    public Plan(PlansEnum plansEnum) {
+        this.id = plansEnum.getId();
+        this.name = plansEnum.getPlanName();
     }
 
     public int getId() {
@@ -35,16 +48,17 @@ public class Plan implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
         Plan plan = (Plan) o;
+
         return id == plan.id;
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return id;
     }
 }
