@@ -26,7 +26,7 @@ public class User implements Serializable, UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(unique = true)
     private String username;
@@ -82,11 +82,11 @@ public class User implements Serializable, UserDetails {
 //        this.passwordResetTokens = passwordResetTokens;
 //    }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

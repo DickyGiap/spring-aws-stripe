@@ -58,7 +58,7 @@ public class DevopsbuddyApplication implements CommandLineRunner {
         roleService.createRole(RolesEnum.ADMIN.getId());
 
 
-        User user = UserUtils.createBasicUser(webmasterUsername, webmasterEmail);
+        User user = UserUtils.createUser(webmasterUsername, webmasterEmail);
         user.setPassword(webmasterPassword);
         Set<UserRole> userRoles = new HashSet<>();
         userRoles.add(new UserRole(user, new Role(RolesEnum.ADMIN)));

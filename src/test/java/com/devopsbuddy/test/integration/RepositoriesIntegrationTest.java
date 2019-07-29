@@ -9,9 +9,12 @@ import com.devopsbuddy.backend.persistence.repositories.RoleRepository;
 import com.devopsbuddy.backend.persistence.repositories.UserRepository;
 import com.devopsbuddy.enums.PlansEnum;
 import com.devopsbuddy.enums.RolesEnum;
+import com.devopsbuddy.utils.UserUtils;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +37,9 @@ public class RepositoriesIntegrationTest {
     @Autowired
     UserRepository userRepository;
 
+    @Rule
+    public TestName testName = new TestName();
+
     private static final int BASIC_PLAN_ID = 1;
 
     @Before
@@ -44,7 +50,7 @@ public class RepositoriesIntegrationTest {
     }
 
     @Test
-    public void createNewPlan() throws Exception {
+    public void createPlan() throws Exception {
         Plan basicPlan = createPlan(PlansEnum.BASIC);
         planRepository.save(basicPlan);
         Plan retrievedPlan = planRepository.findById(BASIC_PLAN_ID).get();
@@ -52,7 +58,7 @@ public class RepositoriesIntegrationTest {
     }
 
     @Test
-    public void createNewRole() throws Exception {
+    public void createRole() throws Exception {
         Role basicRole = createRole(RolesEnum.BASIC);
         roleRepository.save(basicRole);
         Role retrievedRole = roleRepository.findById(RolesEnum.BASIC.getId()).get();
@@ -60,11 +66,14 @@ public class RepositoriesIntegrationTest {
     }
 
     @Test
-    public void createNewUser() throws Exception {
+    public void createUser() throws Exception {
         Plan basicPlan = createPlan(PlansEnum.BASIC);
         planRepository.save(basicPlan);
 
-        User basicUser = createBasicUser();
+        String userName = testName.getMethodName();
+        String email = testName.getMethodName() + "@devopsbuddy.com";
+
+        User basicUser = UserUtils.createUser(userName, email);
         basicUser.setPlan(basicPlan);
 
         Role basicRole = createRole(RolesEnum.BASIC);
@@ -94,6 +103,15 @@ public class RepositoriesIntegrationTest {
         }
     }
 
+    @Test
+    public void testDeleteUser() throws Exception{
+        String userName = testName.getMethodName();
+        String email = testName.getMethodName() + "@devopsbuddy.com";
+
+        User basiceUser = UserUtils.createUser(userName, email);
+        userRepository.delete(basiceUser);
+    }
+
     private Plan createPlan(PlansEnum plansEnum) {
         return new Plan(plansEnum);
     }
@@ -101,21 +119,6 @@ public class RepositoriesIntegrationTest {
     private Role createRole(RolesEnum rolesEnum) {
 
         return new Role(rolesEnum);
-    }
-
-    private User createBasicUser() {
-        User user = new User();
-        user.setUsername("basicUser");
-        user.setPassword("secret");
-        user.setEmail("me@example.com");
-        user.setFirstName("firstName");
-        user.setLastName("lastName");
-        user.setPhoneNumber("123456789123");
-        user.setCountry("GB");
-        user.setEnabled(true);
-        user.setDescription("A basic user");
-        user.setProfileImageUrl("");
-        return user;
     }
 
 }

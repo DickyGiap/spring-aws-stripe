@@ -23,7 +23,7 @@ public class UserUtils {
      * @param email    The email.
      * @return A User entity
      */
-    public static User createBasicUser(String username, String email) {
+    public static User createUser(String username, String email) {
 
         User user = new User();
         user.setUsername(username);
