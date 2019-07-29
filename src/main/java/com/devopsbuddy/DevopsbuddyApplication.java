@@ -12,6 +12,7 @@ import com.devopsbuddy.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,14 +33,14 @@ public class DevopsbuddyApplication implements CommandLineRunner {
     @Autowired
     private RoleService roleService;
 
-    //@Value("${webmaster.username}")
-    private String webmasterUsername = "basicUser";
+    @Value("${webmaster.username}")
+    private String webmasterUsername;
 
-    //@Value("${webmaster.password}")
-    private String webmasterPassword = "secret";
+    @Value("${webmaster.password}")
+    private String webmasterPassword;
 
-    //@Value("${webmaster.email}")
-    private String webmasterEmail = "me@example.com";
+    @Value("${webmaster.email}")
+    private String webmasterEmail;
 
 
     public static void main(String[] args) {
