@@ -26,23 +26,13 @@ import java.util.Set;
 @SpringBootTest
 public class UserServiceIntegrationTest extends AbstractServiceIntegrationTest {
 
-    @Autowired
-    private UserService userService;
-
     @Rule
     public TestName testName = new TestName();
 
     @Test
     public void testCreateNewUser() throws Exception {
 
-        String userName = testName.getMethodName();
-        String email = testName.getMethodName() + "@devopsbuddy.com";
-
-        Set<UserRole> userRoles = new HashSet<>();
-        User basicUser = UserUtils.createUser(userName, email);
-        UserRole userRole = new UserRole(basicUser, new Role(RolesEnum.BASIC));
-        userRoles.add(userRole);
-        User user = userService.createUser(basicUser, PlansEnum.BASIC, userRoles);
+        User user = createUser(testName);
         Assert.assertNotNull(user);
         Assert.assertNotNull(user.getId());
 
