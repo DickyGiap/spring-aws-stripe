@@ -1,7 +1,5 @@
 package com.devopsbuddy.backend.persistence.domain.backend;
 
-//import com.devopsbuddy.enums.RolesEnum;
-
 import com.devopsbuddy.enums.RolesEnum;
 
 import javax.persistence.*;
