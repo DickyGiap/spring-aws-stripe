@@ -4,6 +4,7 @@ import com.devopsbuddy.backend.persistence.domain.backend.PasswordResetToken;
 import com.devopsbuddy.backend.persistence.domain.backend.Plan;
 import com.devopsbuddy.backend.persistence.domain.backend.User;
 import com.devopsbuddy.backend.persistence.domain.backend.UserRole;
+import com.devopsbuddy.backend.persistence.repositories.PasswordResetTokenRepository;
 import com.devopsbuddy.backend.persistence.repositories.PlanRepository;
 import com.devopsbuddy.backend.persistence.repositories.RoleRepository;
 import com.devopsbuddy.backend.persistence.repositories.UserRepository;
@@ -36,8 +37,8 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    //    @Autowired
-    //    private PasswordResetTokenRepository passwordResetTokenRepository;
+    @Autowired
+    private PasswordResetTokenRepository passwordResetTokenRepository;
 
     /**
      * The application logger
@@ -65,9 +66,9 @@ public class UserService {
 
             user.setPlan(plan);
 
-//            for (UserRole ur : userRoles) {
-//                roleRepository.save(ur.getRole());
-//            }
+            //            for (UserRole ur : userRoles) {
+            //                roleRepository.save(ur.getRole());
+            //            }
 
             user.getUserRoles().addAll(userRoles);
 
@@ -98,17 +99,17 @@ public class UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-    //
-    //    @Transactional
-    //    public void updateUserPassword(long userId, String password) {
-    //        password = passwordEncoder.encode(password);
-    //        userRepository.updateUserPassword(userId, password);
-    //        LOG.debug("Password updated successfully for user id {} ", userId);
-    //
-    //        Set<PasswordResetToken> resetTokens = passwordResetTokenRepository.findAllByUserId(userId);
-    //        if (!resetTokens.isEmpty()) {
-    //            passwordResetTokenRepository.delete(resetTokens);
-    //        }
-    //    }
+
+    @Transactional
+    public void updateUserPassword(long userId, String password) {
+        password = passwordEncoder.encode(password);
+        userRepository.updateUserPassword(userId, password);
+        LOG.debug("Password updated successfully for user id {} ", userId);
+
+        Set<PasswordResetToken> resetTokens = passwordResetTokenRepository.findAllByUserId(userId);
+        if (!resetTokens.isEmpty()) {
+            passwordResetTokenRepository.deleteAll(resetTokens);
+        }
+    }
 
 }

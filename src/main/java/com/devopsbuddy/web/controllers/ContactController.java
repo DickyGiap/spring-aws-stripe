@@ -1,4 +1,4 @@
-package com.devopsbuddy.web.controllers.advices;
+package com.devopsbuddy.web.controllers;
 
 import com.devopsbuddy.backend.service.EmailService;
 import com.devopsbuddy.web.domain.frontend.FeedbackPojo;
