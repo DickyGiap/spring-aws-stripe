@@ -33,7 +33,9 @@ import java.util.Locale;
 @Controller
 public class ForgotMyPasswordController {
 
-    /** The application logger */
+    /**
+     * The application logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(ForgotMyPasswordController.class);
 
     public static final String EMAIL_ADDRESS_VIEW_NAME = "forgotmypassword/emailForm";
@@ -73,9 +75,7 @@ public class ForgotMyPasswordController {
     }
 
     @RequestMapping(value = FORGOT_PASSWORD_URL_MAPPING, method = RequestMethod.POST)
-    public String forgotPasswordPost(HttpServletRequest request,
-            @RequestParam("email") String email,
-            ModelMap model) {
+    public String forgotPasswordPost(HttpServletRequest request, @RequestParam("email") String email, ModelMap model) {
 
         PasswordResetToken passwordResetToken = passwordResetTokenService.createPasswordResetTokenForEmail(email);
 
@@ -106,9 +106,7 @@ public class ForgotMyPasswordController {
     }
 
     @RequestMapping(value = CHANGE_PASSWORD_PATH, method = RequestMethod.GET)
-    public String changeUserPasswordGet(@RequestParam("id") long id,
-            @RequestParam("token") String token,
-            Locale locale,
+    public String changeUserPasswordGet(@RequestParam("id") long id, @RequestParam("token") String token, Locale locale,
             ModelMap model) {
         if (StringUtils.isEmpty(token) || id == 0) {
             LOG.error("Invalid user id {}  or token value {}", id, token);
@@ -146,8 +144,7 @@ public class ForgotMyPasswordController {
 
         // OK to proceed. We auto-authenticate the user so that in the POST request we can check if the user
         // is authenticated
-        Authentication auth = new UsernamePasswordAuthenticationToken(
-                user, null, user.getAuthorities());
+        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         return CHANGE_PASSWORD_VIEW_NAME;
@@ -155,8 +152,7 @@ public class ForgotMyPasswordController {
 
     @RequestMapping(value = CHANGE_PASSWORD_PATH, method = RequestMethod.POST)
     public String changeUserPasswordPost(@RequestParam("principal_id") long userId,
-            @RequestParam("password") String password,
-            ModelMap model) {
+            @RequestParam("password") String password, ModelMap model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (null == authentication) {
@@ -183,6 +179,5 @@ public class ForgotMyPasswordController {
         return CHANGE_PASSWORD_VIEW_NAME;
 
     }
-
 
 }
