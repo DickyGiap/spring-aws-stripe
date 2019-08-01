@@ -4,8 +4,8 @@ package com.devopsbuddy.web.domain.frontend;
  * Created by tedonema on 23/04/2016.
  */
 
-import org.hibernate.validator.constraints.Email;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
